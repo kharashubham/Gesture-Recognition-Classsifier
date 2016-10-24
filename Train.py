@@ -21,19 +21,31 @@ def read_from_file(file):
             k += 1
     return final
 
-f1 = read_from_file("/Users/Shubham/PycharmProjects/GsRec/FinalData/O.txt")
-f2 = read_from_file("/Users/Shubham/PycharmProjects/GsRec/FinalData/S.txt")
-f3 = read_from_file("/Users/Shubham/PycharmProjects/GsRec/FinalData/V.txt")
-f4 = read_from_file("/Users/Shubham/PycharmProjects/GsRec/FinalData/W.txt")
+f1 = read_from_file("FinalData/O.txt")
+f2 = read_from_file("FinalData/S.txt")
+f3 = read_from_file("FinalData/V.txt")
+f4 = read_from_file("FinalData/W.txt")
 
-mat1 = numpy.asarray(f1, dtype='float')
-mo1 = numpy.full((31,),1,dtype=numpy.int)
-mat2 = numpy.asarray(f2, dtype='float')
-mo2 = numpy.full((31,),2,dtype=numpy.int)
-mat3 = numpy.asarray(f3, dtype='float')
-mo3 = numpy.full((31,),3,dtype=numpy.int)
-mat4 = numpy.asarray(f4, dtype='float')
-mo4 = numpy.full((31,),4,dtype=numpy.int)
+
+def format_file(f):
+    final_data = []
+    for row in f:
+        row_array = numpy.array([])
+        for item in row:
+            new_item = numpy.asarray(item, dtype='float')
+            row_array = numpy.concatenate((row_array,new_item), 0)
+        final_data.append(row_array)
+    return final_data
+
+mat1 = format_file(f1)
+mat2 = format_file(f2)
+mat3 = format_file(f3)
+mat4 = format_file(f4)
+
+mo1 = numpy.full((31,),1, dtype=numpy.int)
+mo2 = numpy.full((31,),2, dtype=numpy.int)
+mo3 = numpy.full((31,),3, dtype=numpy.int)
+mo4 = numpy.full((31,),4, dtype=numpy.int)
 
 
 X = numpy.concatenate((mat1, mat2, mat3, mat4),0)
@@ -42,6 +54,6 @@ Y = numpy.concatenate((mo1, mo2, mo3, mo4), 0)
 X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=0)
 
 
-
-
-
+clf = SVC(kernel='rbf', C=4)
+clf.fit(X_train, y_train)
+print(clf.score(X_test, y_test))
