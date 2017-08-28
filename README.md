@@ -17,5 +17,4 @@ which are fairly good.
 
 So this data for 4 gestures is in good form to be used as is on any algorithm/model that may require similar type of data.
 
-Anyone trying to implement this paper from scratch and is not able to replicate the results please feel free to get in touch, We would
-love to contribute.
+Anyone trying to implement this paper from scratch and is not able to replicate the results please feel free to get in touch, we would love to contribute.
